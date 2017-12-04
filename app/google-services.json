@@ -1,0 +1,107 @@
+{
+  "project_info": {
+    "project_number": "957903506281",
+    "firebase_url": "https://test-1-177616.firebaseio.com",
+    "project_id": "test-1-177616",
+    "storage_bucket": "test-1-177616.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:957903506281:android:d301280c15b3a220",
+        "android_client_info": {
+          "package_name": "com.example.vinesh.new_login"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "957903506281-6kmst701ne2li2tkbs659fp9lnhbl7d7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.vinesh.new_login",
+            "certificate_hash": "21a7b13d273e1be1b9c4220f77163d8ea6ec2687"
+          }
+        },
+        {
+          "client_id": "957903506281-vvt0i01gp86lvh3k85e35ubb8eotldst.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "957903506281-f34p01tda9i3pbu1aq6p65k3lblgrc3r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhxj7nt6CwawpuoTVnc-p4B4gCCpEAz3o"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "957903506281-vvt0i01gp86lvh3k85e35ubb8eotldst.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:957903506281:android:95af895c34ae6b02",
+        "android_client_info": {
+          "package_name": "com.example.vinesh.uber"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "957903506281-o3t7ht4pat0sqllft3ml0drvv9h1hh33.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.vinesh.uber",
+            "certificate_hash": "21a7b13d273e1be1b9c4220f77163d8ea6ec2687"
+          }
+        },
+        {
+          "client_id": "957903506281-vvt0i01gp86lvh3k85e35ubb8eotldst.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "957903506281-f34p01tda9i3pbu1aq6p65k3lblgrc3r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhxj7nt6CwawpuoTVnc-p4B4gCCpEAz3o"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "957903506281-vvt0i01gp86lvh3k85e35ubb8eotldst.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
