@@ -24,6 +24,7 @@ public class DriverMapActivity extends FragmentActivity implements OnMapReadyCal
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     LocationRequest mLocationRequest;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
