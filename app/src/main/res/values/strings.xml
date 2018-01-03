@@ -1,4 +1,5 @@
 <resources>
-    <string name="app_name">Uber</string>
-    <string name="title_activity_driver_map">Map</string>
+    <string name="app_name">VIDE</string>
+    <string name="title_activity_driver_map">DMap</string>
+    <string name="title_activity_customer_map">CMap</string>
 </resources>

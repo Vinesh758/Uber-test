@@ -15,12 +15,21 @@ public class MainActivity extends AppCompatActivity {
 
         mDriver = (Button) findViewById(R.id.driver);
         mCustomer = (Button) findViewById(R.id.customer);
-        mDriver.setEnabled(true);
         mDriver.setOnClickListener(
                 new View.OnClickListener(){
                     public void onClick(View v){
                         Intent intent = new Intent(MainActivity.this, DriverLoginActivity.class);
                         startActivity(intent);
+                        return ;
+                    }
+                }
+        );
+
+        mCustomer.setOnClickListener(
+                new View.OnClickListener(){
+                    public void onClick(View v){
+                        Intent intentc = new Intent(MainActivity.this, CustomerLoginActivity.class);
+                        startActivity(intentc);
                         return ;
                     }
                 }

@@ -16,6 +16,7 @@ import android.widget.Button;
 
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
+import com.firebase.geofire.GeoQuery;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderApi;
@@ -26,11 +27,12 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class DriverMapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
+public class CustomerMapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
 
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient;
@@ -38,12 +40,13 @@ public class DriverMapActivity extends FragmentActivity implements OnMapReadyCal
     private Location mLastLocation;
     private FusedLocationProviderApi fusedLocationProvider = LocationServices.FusedLocationApi;
     private double mLatitude, mLongitude;
-    private Button mLogout;
+    private Button mLogout, mRequest;
+    private LatLng pickLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_driver_map);
+        setContentView(R.layout.activity_customer_map);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -51,18 +54,46 @@ public class DriverMapActivity extends FragmentActivity implements OnMapReadyCal
         mapFragment.getMapAsync(this);
 
         mLogout = (Button) findViewById(R.id.logout);
+        mRequest = (Button) findViewById(R.id.request);
         mLogout.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         FirebaseAuth.getInstance().signOut();
-                        Intent intent = new Intent(DriverMapActivity.this, MainActivity.class);
+                        Intent intent = new Intent(CustomerMapActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();
                         return;
                     }
                 }
         );
+
+        mRequest.setOnClickListener(
+                new View.OnClickListener(){
+                    public void onClick(View v){
+                        mLatitude = mLastLocation.getLatitude();
+                        mLongitude = mLastLocation.getLongitude();
+                        pickLocation = new LatLng(mLatitude, mLongitude);
+                        String userId = FirebaseAuth.getInstance().getUid();
+                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("customerRequest");
+                        GeoFire geoFire = new GeoFire(ref);
+                        geoFire.setLocation(userId, new GeoLocation(mLatitude, mLongitude));
+
+                        mMap.addMarker(
+                                new MarkerOptions().position(pickLocation).title("Pickup location")
+                        );
+
+                        mRequest.setText("Finding your driver");
+                    }
+                }
+        );
+    }
+    private int radius= 1;
+    private void getCloestDriver(){
+        DatabaseReference driverLocation = FirebaseDatabase.getInstance().getReference().child("driversAvailable");
+        GeoFire geoFire = new GeoFire(driverLocation);
+
+        GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(pickLocation.latitude, pickLocation.longitude), radius);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -96,10 +127,10 @@ public class DriverMapActivity extends FragmentActivity implements OnMapReadyCal
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.moveCamera(CameraUpdateFactory.zoomTo(11));
 
-        String userId = FirebaseAuth.getInstance().getUid();
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("driversAvailable");
-        GeoFire geoFire = new GeoFire(ref);
-        geoFire.setLocation(userId, new GeoLocation(mLatitude, mLongitude));
+//        String userId = FirebaseAuth.getInstance().getUid();
+//        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("driversAvailable");
+//        GeoFire geoFire = new GeoFire(ref);
+//        geoFire.setLocation(userId, new GeoLocation(mLatitude, mLongitude));
 
     }
 
@@ -133,6 +164,7 @@ public class DriverMapActivity extends FragmentActivity implements OnMapReadyCal
         );
     }
 
+
     @Override
     public void onConnectionSuspended(int i) {
 
@@ -151,8 +183,6 @@ public class DriverMapActivity extends FragmentActivity implements OnMapReadyCal
     @Override
     protected void onStart() {
         super.onStart();
-
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -169,7 +199,7 @@ public class DriverMapActivity extends FragmentActivity implements OnMapReadyCal
     protected void onStop() {
         super.onStop();
         String userId = FirebaseAuth.getInstance().getUid();
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("driversAvailable");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("customerRequest");
         GeoFire geoFire = new GeoFire(ref);
         geoFire.removeLocation(userId);
     }
